@@ -1,5 +1,5 @@
 // script.js
-const jagdstaende = [];
+let jagdstaende = [];
 
 const jagdstaendeListe = document.getElementById("jagdstaende");
 const addStandBtn = document.getElementById("addStandBtn");
@@ -29,9 +29,10 @@ function showStandDetails(index) {
     <button id="deleteStandBtn">Jagdstand löschen</button>
   `;
   const todosList = document.getElementById("todosList");
-  stand.todos.forEach(todo => {
+  todosList.innerHTML = "";
+  stand.todos.forEach((todo, i) => {
     const todoItem = document.createElement("li");
-    todoItem.innerHTML = `<input type="checkbox" ${todo.erledigt ? "checked" : ""}> ${todo.text}`;
+    todoItem.innerHTML = `<input type="checkbox" id="todo${i}" ${todo.erledigt ? "checked" : ""}> <label for="todo${i}">${todo.text}</label>`;
     todosList.appendChild(todoItem);
   });
 
@@ -41,6 +42,7 @@ function showStandDetails(index) {
     if (text) {
       stand.todos.push({ text, erledigt: false });
       showStandDetails(index);
+      saveJagdstaende();
     }
   });
 
@@ -48,16 +50,26 @@ function showStandDetails(index) {
   deleteStandBtn.addEventListener("click", () => {
     const confirmDelete = confirm("Möchtest du diesen Jagdstand wirklich löschen?");
     if (confirmDelete) {
-      const confirmDeleteAgain = confirm("Bist du dir sicher? Diese Aktion kann nicht rückgängig gemacht werden.");
-      if (confirmDeleteAgain) {
-        jagdstaende.splice(index, 1);
-        renderJagdstaende();
-        detailsContainer.style.display = "none";
-      }
+      jagdstaende.splice(index, 1);
+      renderJagdstaende();
+      detailsContainer.style.display = "none";
+      saveJagdstaende();
     }
   });
 
   detailsContainer.style.display = "block";
+}
+
+function saveJagdstaende() {
+  localStorage.setItem("jagdstaende", JSON.stringify(jagdstaende));
+}
+
+function loadJagdstaende() {
+  const storedJagdstaende = localStorage.getItem("jagdstaende");
+  if (storedJagdstaende) {
+    jagdstaende = JSON.parse(storedJagdstaende);
+    renderJagdstaende();
+  }
 }
 
 addStandBtn.addEventListener("click", () => {
@@ -66,7 +78,8 @@ addStandBtn.addEventListener("click", () => {
   if (name && ort) {
     jagdstaende.push({ name, ort, todos: [] });
     renderJagdstaende();
+    saveJagdstaende();
   }
 });
 
-renderJagdstaende();
+loadJagdstaende();

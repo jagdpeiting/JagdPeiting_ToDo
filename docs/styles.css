@@ -3,31 +3,24 @@ body {
   font-family: Arial, sans-serif;
 }
 
-#jagdstaendeContainer {
-  margin-bottom: 20px;
-}
-
-#jagdstaendeContainer h2 {
+button {
   margin-bottom: 10px;
 }
 
-#jagdstaende {
+ul {
   list-style-type: none;
+  padding: 0;
 }
 
-#jagdstaende li {
-  margin-bottom: 10px;
+li {
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
-#jagdstaende li:hover {
-  font-weight: bold;
+li:hover {
+  background-color: #f0f0f0;
 }
 
 #detailsContainer {
-  display: none;
-}
-
-#detailsContainer h2 {
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
