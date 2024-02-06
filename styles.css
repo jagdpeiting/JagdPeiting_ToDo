@@ -1,0 +1,33 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+}
+
+#jagdstaendeContainer {
+  margin-bottom: 20px;
+}
+
+#jagdstaendeContainer h2 {
+  margin-bottom: 10px;
+}
+
+#jagdstaende {
+  list-style-type: none;
+}
+
+#jagdstaende li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+#jagdstaende li:hover {
+  font-weight: bold;
+}
+
+#detailsContainer {
+  display: none;
+}
+
+#detailsContainer h2 {
+  margin-bottom: 10px;
+}
