@@ -4,7 +4,7 @@ body {
 }
 
 button {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 ul {
@@ -23,8 +23,4 @@ li:hover {
 
 #detailsContainer {
   margin-top: 20px;
-}
-
-html body {
-  background-color: #f5deb3; /* Hellbraune Hintergrundfarbe */
 }
