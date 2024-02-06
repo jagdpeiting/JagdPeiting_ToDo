@@ -1,4 +1,3 @@
-// script.js
 let jagdstaende = [];
 
 const jagdstaendeListe = document.getElementById("jagdstaende");
@@ -6,6 +5,21 @@ const addStandBtn = document.getElementById("addStandBtn");
 const detailsContainer = document.getElementById("detailsContainer");
 const standDetails = document.getElementById("standDetails");
 
+// Funktion zum Laden der Jagdstände aus dem Local Storage
+function loadJagdstaende() {
+  const storedJagdstaende = localStorage.getItem("jagdstaende");
+  if (storedJagdstaende) {
+    jagdstaende = JSON.parse(storedJagdstaende);
+    renderJagdstaende();
+  }
+}
+
+// Funktion zum Speichern der Jagdstände im Local Storage
+function saveJagdstaende() {
+  localStorage.setItem("jagdstaende", JSON.stringify(jagdstaende));
+}
+
+// Funktion zum Rendern der Jagdstände
 function renderJagdstaende() {
   jagdstaendeListe.innerHTML = "";
   jagdstaende.forEach((stand, index) => {
@@ -18,6 +32,7 @@ function renderJagdstaende() {
   });
 }
 
+// Funktion zum Anzeigen der Details eines Jagdstands
 function showStandDetails(index) {
   const stand = jagdstaende[index];
   standDetails.innerHTML = `
@@ -42,7 +57,7 @@ function showStandDetails(index) {
     if (text) {
       stand.todos.push({ text, erledigt: false });
       showStandDetails(index);
-      saveJagdstaende();
+      saveJagdstaende(); // Speichere die aktualisierten Jagdstände
     }
   });
 
@@ -53,33 +68,23 @@ function showStandDetails(index) {
       jagdstaende.splice(index, 1);
       renderJagdstaende();
       detailsContainer.style.display = "none";
-      saveJagdstaende();
+      saveJagdstaende(); // Speichere die aktualisierten Jagdstände
     }
   });
 
   detailsContainer.style.display = "block";
 }
 
-function saveJagdstaende() {
-  localStorage.setItem("jagdstaende", JSON.stringify(jagdstaende));
-}
-
-function loadJagdstaende() {
-  const storedJagdstaende = localStorage.getItem("jagdstaende");
-  if (storedJagdstaende) {
-    jagdstaende = JSON.parse(storedJagdstaende);
-    renderJagdstaende();
-  }
-}
-
+// Event-Listener für das Hinzufügen eines Jagdstands
 addStandBtn.addEventListener("click", () => {
   const name = prompt("Name des Jagdstandes:");
   const ort = prompt("Ort des Jagdstandes:");
   if (name && ort) {
     jagdstaende.push({ name, ort, todos: [] });
     renderJagdstaende();
-    saveJagdstaende();
+    saveJagdstaende(); // Speichere die aktualisierten Jagdstände
   }
 });
 
+// Lade die Jagdstände beim Laden der Seite
 loadJagdstaende();
